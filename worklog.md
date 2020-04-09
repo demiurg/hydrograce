@@ -14,8 +14,13 @@ would you approach this?
 ## Tasks
 
 1. Download right data
-2. Prototype timeseries for point
-3. Prototype 
+	1. identify product
+	2. download product
+2. Timeseries for point
+	1. open file
+	2. get point for x, y, time, band
+3. Aggregate for polygon
+4. Aggregate timeseries for polygon
 
 ## Browsing data steps
 
@@ -35,3 +40,6 @@ would you approach this?
 		* JPL (Jet Propulsion Laboratory)
 6. https://podaac.jpl.nasa.gov/dataset/TELLUS_GLDAS-NOAH-3.3_TWS-ANOMALY_MONTHLY?ids=DataFormat:ProcessingLevel&values=NETCDF:*3*&search=GRACE
 	* Level 3 data is GLDAS hydrology model
+7. https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/GRACEGroundwater.pdf
+	* dG = dTWS(GRACE) - (dSoilMoisture(gldas) + dSnowWaterEquivalent(GLDAS))
+
