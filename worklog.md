@@ -55,3 +55,5 @@ would you approach this?
 * GRACE
 	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC_L3_CSR_RL06_LND_v03
 		* 2002 - 2017
+* No valid temporal coverage
+	* OWSLib dataset url not clear for time coverage, only individual files
