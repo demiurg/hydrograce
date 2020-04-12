@@ -43,3 +43,15 @@ would you approach this?
 7. https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/GRACEGroundwater.pdf
 	* dG = dTWS(GRACE) - (dSoilMoisture(gldas) + dSnowWaterEquivalent(GLDAS))
 
+
+## Data
+
+* GLDAS
+	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GLDAS-NOAH-3.3_TWS-ANOMALY_MONTHLY
+		* 2002 - Present
+* GRACE-FO
+	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRFO_L3_CSR_RL06_LND_v03
+		* 2018 - Present
+* GRACE
+	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC_L3_CSR_RL06_LND_v03
+		* 2002 - 2017
