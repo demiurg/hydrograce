@@ -58,15 +58,24 @@ would you approach this?
 	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC_L3_CSR_RL06_LND_v03
 		* 2002 - 2017
 		* GeoTIFF with projection
-* No valid temporal coverage metadata
+* No valid temporal coverage metadata from the server
 	* OWSLib dataset url not clear for time coverage, only individual files
 	* Opening HTTP URL did not work, subsetting using pydap did not work
 	* pydap errors:
 	```
 		TTPError: 400 Bad Request
-		Error { 
+		Error {
 		    code = 400;
 		    message = "libdap error transmitting DataDDS: Constraint expression parse error: No such identifier in dataset: TWS_monthly.TWS_monthly[0";
 		}
 	```
-* No valid project on netcdf grid and no TIF files for GLDAS
+* No valid projection on netcdf grid and no TIFF files for GLDAS
+	* Download GeoTIFF for GRACE/FO data, because it is georeferenced
+	* Convert NetCDF to GeoTIFF with projection
+
+## Actions
+
+1. Prepare the data
+	1. Download the data.
+	2. gdal_translate netCDF to GeoTIFF with EPSG:4326 projection
+2. -
