@@ -41,7 +41,7 @@ would you approach this?
 6. https://podaac.jpl.nasa.gov/dataset/TELLUS_GLDAS-NOAH-3.3_TWS-ANOMALY_MONTHLY?ids=DataFormat:ProcessingLevel&values=NETCDF:*3*&search=GRACE
 	* Level 3 data is GLDAS hydrology model
 7. https://docserver.gesdisc.eosdis.nasa.gov/public/project/hydrology/GRACEGroundwater.pdf
-	* dG = dTWS(GRACE) - (dSoilMoisture(gldas) + dSnowWaterEquivalent(GLDAS))
+	* dG = dTWS(GRACE) - (dSoilMoisture(GLDAS) + dSnowWaterEquivalent(GLDAS))
 
 
 ## Data
@@ -49,11 +49,24 @@ would you approach this?
 * GLDAS
 	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GLDAS-NOAH-3.3_TWS-ANOMALY_MONTHLY
 		* 2002 - Present
+		* NetCDF only
 * GRACE-FO
 	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRFO_L3_CSR_RL06_LND_v03
 		* 2018 - Present
+		* GeoTIFF with projection
 * GRACE
 	* https://podaac.jpl.nasa.gov/dataset/TELLUS_GRAC_L3_CSR_RL06_LND_v03
 		* 2002 - 2017
-* No valid temporal coverage
+		* GeoTIFF with projection
+* No valid temporal coverage metadata
 	* OWSLib dataset url not clear for time coverage, only individual files
+	* Opening HTTP URL did not work, subsetting using pydap did not work
+	* pydap errors:
+	```
+		TTPError: 400 Bad Request
+		Error { 
+		    code = 400;
+		    message = "libdap error transmitting DataDDS: Constraint expression parse error: No such identifier in dataset: TWS_monthly.TWS_monthly[0";
+		}
+	```
+* No valid project on netcdf grid and no TIF files for GLDAS
