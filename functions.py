@@ -2,7 +2,7 @@
 
 import glob
 import re
-from datetime import datetime, timedelta
+from datetime import date, timedelta
 
 
 dates_re = re.compile(
@@ -46,11 +46,11 @@ def log(*args):
 def fn2dates(f):
     dates = re.search(dates_re, f).groupdict()
     start = (
-        datetime(int(dates["start_year"]), 1, 1)
+        date(int(dates["start_year"]), 1, 1)
         + timedelta(int(dates["start_doy"]) - 1)
     ).date()
     stop = (
-        datetime(int(dates["stop_year"]), 1, 1)
+        date(int(dates["stop_year"]), 1, 1)
         + timedelta(int(dates["stop_doy"]) - 1)
     ).date()
 
@@ -107,6 +107,23 @@ def index_files():
             }
 
     return common_index
+
+
+class GroundWater:
+    def __init__(self):
+        self.files = [
+            (date(k[0], k[1], 1), v) for k, v in index_files().items()
+        ]
+
+    def get_dates(self, start: date, stop: date):
+        """ Inclusive interval for simplicity """
+
+        found = []
+        for idx, files in self.files:
+            if idx >= start and idx <= stop:
+                found.append((idx, files))
+
+        return found
 
 
 def main():

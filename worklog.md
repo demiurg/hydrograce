@@ -80,29 +80,29 @@ would you approach this?
         1. parse filenames from HTML, save as files
         2. write wget script to download all files by url
     2. gdal_translate netCDF to GeoTIFF with EPSG:4326 projection
-    3. Align the time index
-        1. Notes
-            1. Some GLDAS date ranges did not align, but were contained within GRACE from CSR
-            2. Some dates were extended out
-            3. It is possible that other institutions have generated different date ranges
-        2. Create [(year, month): filename] map
-            1. Identify exceptions to the ordered dates:
-            ```
-            2011-08-01 2011-08-31 (2011, 8) 2011213-2011243 
-            2011-09-01 2011-09-30 (2011, 9) 2011244-2011273 
-            2011-10-01 2011-10-31 (2011, 10) 2011274-2011304 
-            2011-10-16 2011-11-15 None 2011289-2011319 grace not in gldas
-            2011-12-13 2012-01-11 None 2011347-2012011 grace not in gldas
-            2012-01-01 2012-01-31 (2012, 1) 2012001-2012031 
-            2012-02-01 2012-02-29 (2012, 2) 2012032-2012060 
-            2012-03-01 2012-03-31 (2012, 3) 2012061-2012091 
-            2012-03-20 2012-04-18 None 2012080-2012109 grace not in gldas
-            2012-06-01 2012-06-30 (2012, 6) 2012153-2012182 
-            # becomes
-            dates_months = {
-                "2011289-2011319": (2011, 11),
-                "2011347-2012011": (2011, 12),
-                "2012080-2012109": (2012, 4),
-            }
-            ```
-2. -
+2. Align the time index
+    1. Notes
+        1. Some GLDAS date ranges did not align, but were contained within GRACE from CSR
+        2. Some dates were extended out
+        3. It is possible that other institutions have generated different date ranges
+    2. Create [(year, month): filename] map
+        1. Identify exceptions to the ordered dates:
+        ```
+        2011-08-01 2011-08-31 (2011, 8) 2011213-2011243 
+        2011-09-01 2011-09-30 (2011, 9) 2011244-2011273 
+        2011-10-01 2011-10-31 (2011, 10) 2011274-2011304 
+        2011-10-16 2011-11-15 None 2011289-2011319 grace not in gldas
+        2011-12-13 2012-01-11 None 2011347-2012011 grace not in gldas
+        2012-01-01 2012-01-31 (2012, 1) 2012001-2012031 
+        2012-02-01 2012-02-29 (2012, 2) 2012032-2012060 
+        2012-03-01 2012-03-31 (2012, 3) 2012061-2012091 
+        2012-03-20 2012-04-18 None 2012080-2012109 grace not in gldas
+        2012-06-01 2012-06-30 (2012, 6) 2012153-2012182 
+        # becomes
+        dates_months = {
+            "2011289-2011319": (2011, 11),
+            "2011347-2012011": (2011, 12),
+            "2012080-2012109": (2012, 4),
+        }
+        ```
+2. Build functions
