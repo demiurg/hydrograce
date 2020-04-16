@@ -13121,13 +13121,17 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">gldas_dates</span> <span class="o">=</span> <span class="p">{}</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Parse all the files and creates lists of available dates for</span>
+
+<span class="c1">#GLDAS</span>
+<span class="n">gldas_dates</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">gldas_files</span><span class="p">),</span> <span class="s2">&quot;GLDAS Files&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">gldas_files</span><span class="p">):</span>
     <span class="n">dates</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">dates_re</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
     <span class="n">gldas_dates</span><span class="p">[</span><span class="n">dates</span><span class="p">[</span><span class="s2">&quot;range&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dates</span><span class="p">)</span>
     <span class="c1"># log(dates.values())</span>
 
+<span class="c1">#GRACE</span>
 <span class="n">grace_dates</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grace_files</span><span class="p">),</span> <span class="s2">&quot;GRACE Files&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">grace_files</span><span class="p">):</span>
@@ -13164,7 +13168,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Iterating a list of GRACE files</span>
+<span class="c1"># show files from GLDAS that do not match exactly by time range</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="k">for</span> <span class="n">drange</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dates</span><span class="p">)</span> <span class="ow">in</span> <span class="n">grace_dates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="k">if</span> <span class="n">drange</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">gldas_dates</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">dates</span><span class="p">[</span><span class="s1">&#39;range&#39;</span><span class="p">])</span>
