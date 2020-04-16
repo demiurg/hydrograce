@@ -114,3 +114,12 @@ would you approach this?
         4. aggregates mean value
         5. combines aggregated by 'mean' values into timeseries array
     3. Test
+
+## Things TODO
+
+1. There multiple improvements to how data can be accessed.
+    1. Find and use time catalog or service that would allow to request specific data by time.
+    2. Use a client to request specific ranges from raster files
+2. There possible improvements to data processing
+    1. Use the mean of all 3 GRACE dataset
+    2. Optimize aggregation algorith to rasterize a polygon, and then apply a mask
