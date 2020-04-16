@@ -3,6 +3,7 @@
 import glob
 import re
 from datetime import date, timedelta
+import rioxarray
 
 
 dates_re = re.compile(
@@ -125,6 +126,23 @@ class GroundWater:
 
         return found
 
+    def get_gw_series(self, start: date, stop: date, polygon):
+        found = self.get_dates(start, stop)
+        timeseries = []
+        for year_month, files in found.items():
+            grace = rioxarray.open_rasterio(files["grace"], masked=True)
+            gldas = rioxarray.open_rasterio(files["gldas"], masked=True)
+
+            grace_clipped = grace.rio.clip(polygon)
+            gldas_clipped = gldas.rio.clip(polygon)
+
+            groundwater = grace_clipped - gldas_clipped / 1000
+
+            timeseries.appedn([
+                date(year_month[0], year_month[1], 1),
+                groundwater.mean()
+            ])
+        return timeseries
 
 def main():
     index_files()
