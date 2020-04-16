@@ -106,3 +106,11 @@ would you approach this?
         }
         ```
 2. Build functions
+    1. Create class for reuability of any state, such as 'scanned files'
+    2. Add mothod
+        1. takes start date, end date, and a shapely shape object
+        2. finds all files between the dates
+        3. clips all files to shape object
+        4. aggregates mean value
+        5. combines aggregated by 'mean' values into timeseries array
+    3. Test

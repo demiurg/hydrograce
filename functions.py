@@ -3,7 +3,10 @@
 import glob
 import re
 from datetime import date, timedelta
+from collections.abc import Iterable
+
 import rioxarray
+from shapely.geometry import shape
 
 
 dates_re = re.compile(
@@ -46,14 +49,12 @@ def log(*args):
 
 def fn2dates(f):
     dates = re.search(dates_re, f).groupdict()
-    start = (
-        date(int(dates["start_year"]), 1, 1)
-        + timedelta(int(dates["start_doy"]) - 1)
-    ).date()
-    stop = (
-        date(int(dates["stop_year"]), 1, 1)
-        + timedelta(int(dates["stop_doy"]) - 1)
-    ).date()
+    start = date(int(dates["start_year"]), 1, 1) + timedelta(
+        int(dates["start_doy"]) - 1
+    )
+    stop = date(int(dates["stop_year"]), 1, 1) + timedelta(
+        int(dates["stop_doy"]) - 1
+    )
 
     dates["start_date"], dates["stop_date"] = start, stop
     if start.year == stop.year and start.month == stop.month:
@@ -118,6 +119,8 @@ class GroundWater:
 
     def get_dates(self, start: date, stop: date):
         """ Inclusive interval for simplicity """
+        if stop > stop:
+            print("If stop > start, no data will be found")
 
         found = []
         for idx, files in self.files:
@@ -126,26 +129,38 @@ class GroundWater:
 
         return found
 
-    def get_gw_series(self, start: date, stop: date, polygon):
+    def get_timeseries(self, start: date, stop: date, geometry):
         found = self.get_dates(start, stop)
         timeseries = []
-        for year_month, files in found.items():
+
+        # Turn a polygon into a MultiPolygon
+        if not isinstance(geometry, Iterable):
+            polygons = [geometry]
+        else:
+            polygons = geometry
+
+        for year_month, files in found:
             grace = rioxarray.open_rasterio(files["grace"], masked=True)
             gldas = rioxarray.open_rasterio(files["gldas"], masked=True)
 
-            grace_clipped = grace.rio.clip(polygon)
-            gldas_clipped = gldas.rio.clip(polygon)
+            grace_clipped = grace.rio.clip(polygons, 'epsg:4326')
+            gldas_clipped = gldas.rio.clip(polygons, 'epsg:4326')
 
             groundwater = grace_clipped - gldas_clipped / 1000
 
-            timeseries.appedn([
-                date(year_month[0], year_month[1], 1),
-                groundwater.mean()
-            ])
+            timeseries.append(
+                [year_month, float(groundwater.mean())]
+            )
         return timeseries
 
+
 def main():
-    index_files()
+    # index_files()
+    gw = GroundWater()
+    from states import CA, MD
+    geom = shape(CA)
+    ts = gw.get_timeseries(date(2018, 1, 1), date(2020, 1, 1), geom)
+    print(ts)
 
 
 if __name__ == "__main__":
