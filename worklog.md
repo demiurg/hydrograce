@@ -106,7 +106,7 @@ would you approach this?
         }
         ```
 2. Build functions
-    1. Create class for reuability of any state, such as 'scanned files'
+    1. Create class for reusability of any state, from memory, such as file handles or intermediary aggregates
     2. Add mothod
         1. takes start date, end date, and a shapely shape object
         2. finds all files between the dates
@@ -117,9 +117,9 @@ would you approach this?
 
 ## Things TODO
 
-1. There multiple improvements to how data can be accessed.
+1. There are multiple improvements to how data can be accessed.
     1. Find and use time catalog or service that would allow to request specific data by time.
-    2. Use a client to request specific ranges from raster files
-2. There possible improvements to data processing
+    2. Use a data client to request specific spacial range from raster files.
+2. There are possible improvements to data processing
     1. Use the mean of all 3 GRACE dataset
-    2. Optimize aggregation algorith to rasterize a polygon, and then apply a mask
+    2. Optimize aggregation algorithm to rasterize a polygon, and then apply a mask to improve speed
